@@ -1,0 +1,57 @@
+============
+Simple facts
+============
+
+fact(1,2,3);
+fact(true, false);
+fact(hex:00aabb);
+fact(12, -12);
+fact(
+  2023-02-28T00:00:00Z,
+  2023-02-28T00:00:00Z
+);
+fact($variable);
+
+---
+
+(source_file
+  (authorizer_element
+    (fact
+      (nname)
+      (fact_term
+        (number))
+      (fact_term
+        (number))
+      (fact_term
+        (number))))
+  (authorizer_element
+    (fact
+      (nname)
+      (fact_term
+        (boolean))
+      (fact_term
+        (boolean))))
+  (authorizer_element
+    (fact
+      (nname)
+      (fact_term
+        (bytes))))
+  (authorizer_element
+    (fact
+      (nname)
+      (fact_term
+        (number))
+      (fact_term
+        (number))))
+  (authorizer_element
+    (fact
+      (nname)
+      (fact_term
+        (date))
+      (fact_term
+        (date))))
+  (ERROR
+    (predicate
+      (nname)
+      (term
+        (variable)))))

@@ -1,0 +1,30 @@
+=============================
+Simple rules (no expressions)
+=============================
+
+head($var, true) <- fact1(true, $var), fact2($other, $var);
+
+---
+
+(source_file
+  (authorizer_element
+    (rule
+      (predicate
+        (nname)
+        (term
+          (variable))
+        (term
+          (boolean)))
+      (rule_body
+        (predicate
+          (nname)
+          (term
+            (boolean))
+          (term
+            (variable)))
+        (predicate
+          (nname)
+          (term
+            (variable))
+          (term
+            (variable)))))))

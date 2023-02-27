@@ -1,0 +1,57 @@
+===============================
+Simple rules (with expressions)
+===============================
+
+head($var, true) <- fact1(true, $var), 1 + 2, fact2($other, $var), 4 +3 / 5-12;
+head($var, true) <- fact1($var), !"test".contains("te") == 1 > "test".length();
+
+---
+
+(source_file
+  (authorizer_element
+    (rule
+      (predicate
+        (nname)
+        (term
+          (variable))
+        (term
+          (boolean)))
+      (rule_body
+        (predicate
+          (nname)
+          (term
+            (boolean))
+          (term
+            (variable)))
+        (expression
+          (binary_op_expression
+            (expression
+              (term
+                (number)))
+            (expression
+              (term
+                (number)))))
+        (predicate
+          (nname)
+          (term
+            (variable))
+          (term
+            (variable)))
+        (expression
+          (binary_op_expression
+            (expression
+              (binary_op_expression
+                (expression
+                  (term
+                    (number)))
+                (expression
+                  (binary_op_expression
+                    (expression
+                      (term
+                        (number)))
+                    (expression
+                      (term
+                        (number)))))))
+            (expression
+              (term
+                (number)))))))))
