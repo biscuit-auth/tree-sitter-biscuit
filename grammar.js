@@ -18,9 +18,9 @@ module.exports = grammar({
     
    authorizer_element: $ => seq(choice($.rule, $.fact, $.policy, $.check), ";"),
   rule: $ => seq(
-      $.predicate,
+      field('head', $.predicate),
       "<-",
-      $.rule_body
+      field('body', $.rule_body)
     ),
   check: $ => seq(
        choice("check if", "check all"),
