@@ -739,6 +739,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "string"
+        },
+        {
+          "type": "SYMBOL",
           "name": "set"
         },
         {
@@ -781,6 +785,10 @@
         {
           "type": "SYMBOL",
           "name": "date"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string"
         },
         {
           "type": "SYMBOL",
@@ -1353,5 +1361,6 @@
   "precedences": [],
   "externals": [],
   "inline": [],
-  "supertypes": []
+  "supertypes": [],
+  "reserved": {}
 }

@@ -222,6 +222,10 @@
         {
           "type": "set",
           "named": true
+        },
+        {
+          "type": "string",
+          "named": true
         }
       ]
     }
@@ -599,6 +603,10 @@
         },
         {
           "type": "set",
+          "named": true
+        },
+        {
+          "type": "string",
           "named": true
         },
         {
