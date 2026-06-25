@@ -109,8 +109,8 @@ module.exports = grammar({
       prec.left(1, seq($.expression, "&&", $.expression)),
       prec.left(0, seq($.expression, "||", $.expression))
     ),
-  term: $ => choice($.param, $.boolean, $.null, $.bytes, $.number, $.date, $.set, $.array, $.map, $.variable),
-  fact_term: $ => choice($.param, $.boolean, $.null, $.bytes, $.number, $.date, $.set, $.array, $.map),
+  term: $ => choice($.param, $.boolean, $.null, $.bytes, $.number, $.date, $.string, $.set, $.array, $.map, $.variable),
+  fact_term: $ => choice($.param, $.boolean, $.null, $.bytes, $.number, $.date, $.string, $.set, $.array, $.map),
   set_term: $ => choice($.param, $.boolean, $.null, $.bytes, $.number, $.date, $.string),
   boolean: $ => choice("true", "false"),
   null: $ => "null",
