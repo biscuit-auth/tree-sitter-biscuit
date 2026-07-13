@@ -1,0 +1,725 @@
+================================================================================
+Simple rights facts
+================================================================================
+
+right("file1", "read");
+right("file2", "read");
+right("file1", "write");
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (authorizer_element
+    (fact
+      (nname)
+      (fact_term
+        (string))
+      (fact_term
+        (string))))
+  (authorizer_element
+    (fact
+      (nname)
+      (fact_term
+        (string))
+      (fact_term
+        (string))))
+  (authorizer_element
+    (fact
+      (nname)
+      (fact_term
+        (string))
+      (fact_term
+        (string)))))
+
+================================================================================
+User and owner facts
+================================================================================
+
+user_id("alice");
+owner("alice", "file1");
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (authorizer_element
+    (fact
+      (nname)
+      (fact_term
+        (string))))
+  (authorizer_element
+    (fact
+      (nname)
+      (fact_term
+        (string))
+      (fact_term
+        (string)))))
+
+================================================================================
+Namespaced facts
+================================================================================
+
+ns::fact_123("hello é	😁");
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (authorizer_element
+    (fact
+      (nname)
+      (fact_term
+        (string)))))
+
+================================================================================
+Resource check with variables
+================================================================================
+
+check if resource($0), operation("read"), right($0, "read");
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (authorizer_element
+    (check
+      (rule_body
+        (predicate
+          (nname)
+          (term
+            (variable)))
+        (predicate
+          (nname)
+          (term
+            (string)))
+        (predicate
+          (nname)
+          (term
+            (variable))
+          (term
+            (string)))))))
+
+================================================================================
+Time-based check
+================================================================================
+
+check if resource("file1");
+check if time($time), $time <= 2018-12-20T00:00:00Z;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (authorizer_element
+    (check
+      (rule_body
+        (predicate
+          (nname)
+          (term
+            (string))))))
+  (authorizer_element
+    (check
+      (rule_body
+        (predicate
+          (nname)
+          (term
+            (variable)))
+        (expression
+          (binary_op_expression
+            (expression
+              (term
+                (variable)))
+            (expression
+              (term
+                (date)))))))))
+
+================================================================================
+Pattern matching check
+================================================================================
+
+check if resource($0), $0.matches("file[0-9]+.txt");
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (authorizer_element
+    (check
+      (rule_body
+        (predicate
+          (nname)
+          (term
+            (variable)))
+        (expression
+          (methods
+            (expression
+              (term
+                (variable)))
+            (nname)
+            (method_argument
+              (expression
+                (term
+                  (string))))))))))
+
+================================================================================
+Expression checks
+================================================================================
+
+check if true;
+check if !false;
+check if true === true;
+check if 1 < 2;
+check if 2 > 1;
+check if 1 + 2 * 3 - 4 / 2 === 5;
+check if "hello world".starts_with("hello"), "hello world".ends_with("world");
+check if "aaabde".matches("a*c?.e");
+check if "aaabde".contains("abd");
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (authorizer_element
+    (check
+      (rule_body
+        (expression
+          (term
+            (boolean))))))
+  (authorizer_element
+    (check
+      (rule_body
+        (expression
+          (unary_op_expression
+            (expression
+              (term
+                (boolean))))))))
+  (authorizer_element
+    (check
+      (rule_body
+        (expression
+          (binary_op_expression
+            (expression
+              (term
+                (boolean)))
+            (expression
+              (term
+                (boolean))))))))
+  (authorizer_element
+    (check
+      (rule_body
+        (expression
+          (binary_op_expression
+            (expression
+              (term
+                (number)))
+            (expression
+              (term
+                (number))))))))
+  (authorizer_element
+    (check
+      (rule_body
+        (expression
+          (binary_op_expression
+            (expression
+              (term
+                (number)))
+            (expression
+              (term
+                (number))))))))
+  (authorizer_element
+    (check
+      (rule_body
+        (expression
+          (binary_op_expression
+            (expression
+              (binary_op_expression
+                (expression
+                  (binary_op_expression
+                    (expression
+                      (term
+                        (number)))
+                    (expression
+                      (binary_op_expression
+                        (expression
+                          (term
+                            (number)))
+                        (expression
+                          (term
+                            (number)))))))
+                (expression
+                  (binary_op_expression
+                    (expression
+                      (term
+                        (number)))
+                    (expression
+                      (term
+                        (number)))))))
+            (expression
+              (term
+                (number))))))))
+  (authorizer_element
+    (check
+      (rule_body
+        (expression
+          (methods
+            (expression
+              (term
+                (string)))
+            (nname)
+            (method_argument
+              (expression
+                (term
+                  (string))))))
+        (expression
+          (methods
+            (expression
+              (term
+                (string)))
+            (nname)
+            (method_argument
+              (expression
+                (term
+                  (string)))))))))
+  (authorizer_element
+    (check
+      (rule_body
+        (expression
+          (methods
+            (expression
+              (term
+                (string)))
+            (nname)
+            (method_argument
+              (expression
+                (term
+                  (string)))))))))
+  (authorizer_element
+    (check
+      (rule_body
+        (expression
+          (methods
+            (expression
+              (term
+                (string)))
+            (nname)
+            (method_argument
+              (expression
+                (term
+                  (string))))))))))
+
+================================================================================
+Rule with body
+================================================================================
+
+right($0, "read") <- resource($0), user_id($1), owner($1, $0);
+check if resource($0), operation("read"), right($0, "read");
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (authorizer_element
+    (rule
+      (predicate
+        (nname)
+        (term
+          (variable))
+        (term
+          (string)))
+      (rule_body
+        (predicate
+          (nname)
+          (term
+            (variable)))
+        (predicate
+          (nname)
+          (term
+            (variable)))
+        (predicate
+          (nname)
+          (term
+            (variable))
+          (term
+            (variable))))))
+  (authorizer_element
+    (check
+      (rule_body
+        (predicate
+          (nname)
+          (term
+            (variable)))
+        (predicate
+          (nname)
+          (term
+            (string)))
+        (predicate
+          (nname)
+          (term
+            (variable))
+          (term
+            (string)))))))
+
+================================================================================
+Complex rule with negation
+================================================================================
+
+valid_date("file1") <- time($0), resource("file1"), $0 <= 2030-12-31T12:59:59Z;
+valid_date($1) <- time($0), resource($1), $0 <= 1999-12-31T12:59:59Z, !{"file1"}.contains($1);
+check if valid_date($0), resource($0);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (authorizer_element
+    (rule
+      (predicate
+        (nname)
+        (term
+          (string)))
+      (rule_body
+        (predicate
+          (nname)
+          (term
+            (variable)))
+        (predicate
+          (nname)
+          (term
+            (string)))
+        (expression
+          (binary_op_expression
+            (expression
+              (term
+                (variable)))
+            (expression
+              (term
+                (date))))))))
+  (authorizer_element
+    (rule
+      (predicate
+        (nname)
+        (term
+          (variable)))
+      (rule_body
+        (predicate
+          (nname)
+          (term
+            (variable)))
+        (predicate
+          (nname)
+          (term
+            (variable)))
+        (expression
+          (binary_op_expression
+            (expression
+              (term
+                (variable)))
+            (expression
+              (term
+                (date)))))
+        (expression
+          (unary_op_expression
+            (expression
+              (methods
+                (expression
+                  (term
+                    (set
+                      (set_term
+                        (string)))))
+                (nname)
+                (method_argument
+                  (expression
+                    (term
+                      (variable)))))))))))
+  (authorizer_element
+    (check
+      (rule_body
+        (predicate
+          (nname)
+          (term
+            (variable)))
+        (predicate
+          (nname)
+          (term
+            (variable)))))))
+
+================================================================================
+Facts with allow policy
+================================================================================
+
+resource("file1");
+
+allow if true;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (authorizer_element
+    (fact
+      (nname)
+      (fact_term
+        (string))))
+  (authorizer_element
+    (policy
+      (rule_body
+        (expression
+          (term
+            (boolean)))))))
+
+================================================================================
+Facts with check and policy
+================================================================================
+
+resource("file2");
+operation("read");
+
+check if right($0, $1), resource($0), operation($1);
+
+allow if true;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (authorizer_element
+    (fact
+      (nname)
+      (fact_term
+        (string))))
+  (authorizer_element
+    (fact
+      (nname)
+      (fact_term
+        (string))))
+  (authorizer_element
+    (check
+      (rule_body
+        (predicate
+          (nname)
+          (term
+            (variable))
+          (term
+            (variable)))
+        (predicate
+          (nname)
+          (term
+            (variable)))
+        (predicate
+          (nname)
+          (term
+            (variable))))))
+  (authorizer_element
+    (policy
+      (rule_body
+        (expression
+          (term
+            (boolean)))))))
+
+================================================================================
+Trusting annotation in rule
+================================================================================
+
+query(1);
+query(1, 2) <- query(1), query(2) trusting ed25519/a060270db7e9c9f06e8f9cc33a64e99f6596af12cb01c4b638df8afc7b642463;
+check if query(2), query(3) trusting ed25519/a060270db7e9c9f06e8f9cc33a64e99f6596af12cb01c4b638df8afc7b642463;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (authorizer_element
+    (fact
+      (nname)
+      (fact_term
+        (number))))
+  (authorizer_element
+    (rule
+      (predicate
+        (nname)
+        (term
+          (number))
+        (term
+          (number)))
+      (rule_body
+        (predicate
+          (nname)
+          (term
+            (number)))
+        (predicate
+          (nname)
+          (term
+            (number)))
+        (origin_clause
+          (origin_element
+            (sig_alg))))))
+  (authorizer_element
+    (check
+      (rule_body
+        (predicate
+          (nname)
+          (term
+            (number)))
+        (predicate
+          (nname)
+          (term
+            (number)))
+        (origin_clause
+          (origin_element
+            (sig_alg)))))))
+
+================================================================================
+Set operations in checks
+================================================================================
+
+check if {1, 2}.contains(2);
+check if {1, 2}.contains({2});
+check if {1, 2} === {1, 2};
+check if {1, 2}.intersection({2, 3}) === {2};
+check if {1, 2}.union({2, 3}) === {1, 2, 3};
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (authorizer_element
+    (check
+      (rule_body
+        (expression
+          (methods
+            (expression
+              (term
+                (set
+                  (set_term
+                    (number))
+                  (set_term
+                    (number)))))
+            (nname)
+            (method_argument
+              (expression
+                (term
+                  (number)))))))))
+  (authorizer_element
+    (check
+      (rule_body
+        (expression
+          (methods
+            (expression
+              (term
+                (set
+                  (set_term
+                    (number))
+                  (set_term
+                    (number)))))
+            (nname)
+            (method_argument
+              (expression
+                (term
+                  (set
+                    (set_term
+                      (number)))))))))))
+  (authorizer_element
+    (check
+      (rule_body
+        (expression
+          (binary_op_expression
+            (expression
+              (term
+                (set
+                  (set_term
+                    (number))
+                  (set_term
+                    (number)))))
+            (expression
+              (term
+                (set
+                  (set_term
+                    (number))
+                  (set_term
+                    (number))))))))))
+  (authorizer_element
+    (check
+      (rule_body
+        (expression
+          (binary_op_expression
+            (expression
+              (methods
+                (expression
+                  (term
+                    (set
+                      (set_term
+                        (number))
+                      (set_term
+                        (number)))))
+                (nname)
+                (method_argument
+                  (expression
+                    (term
+                      (set
+                        (set_term
+                          (number))
+                        (set_term
+                          (number))))))))
+            (expression
+              (term
+                (set
+                  (set_term
+                    (number))))))))))
+  (authorizer_element
+    (check
+      (rule_body
+        (expression
+          (binary_op_expression
+            (expression
+              (methods
+                (expression
+                  (term
+                    (set
+                      (set_term
+                        (number))
+                      (set_term
+                        (number)))))
+                (nname)
+                (method_argument
+                  (expression
+                    (term
+                      (set
+                        (set_term
+                          (number))
+                        (set_term
+                          (number))))))))
+            (expression
+              (term
+                (set
+                  (set_term
+                    (number))
+                  (set_term
+                    (number))
+                  (set_term
+                    (number)))))))))))
+
+================================================================================
+Policy with closures
+================================================================================
+
+allow if {"true"}.any($p -> {"true"}.all($p -> $p));
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (authorizer_element
+    (policy
+      (rule_body
+        (expression
+          (methods
+            (expression
+              (term
+                (set
+                  (set_term
+                    (string)))))
+            (nname)
+            (method_argument
+              (closure
+                (variable)
+                (expression
+                  (methods
+                    (expression
+                      (term
+                        (set
+                          (set_term
+                            (string)))))
+                    (nname)
+                    (method_argument
+                      (closure
+                        (variable)
+                        (expression
+                          (term
+                            (variable)))))))))))))))

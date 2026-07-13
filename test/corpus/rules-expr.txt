@@ -1,11 +1,11 @@
-===============================
+================================================================================
 Simple rules (with expressions)
-===============================
+================================================================================
 
 head($var, true) <- fact1(true, $var), 1 + 2, fact2($other, $var), 4 +3 / 5-12;
 head($var, true) <- fact1($var), !"test".contains("te") == 1 > "test".length();
 
----
+--------------------------------------------------------------------------------
 
 (source_file
   (authorizer_element
@@ -68,13 +68,28 @@ head($var, true) <- fact1($var), !"test".contains("te") == 1 > "test".length();
           (nname)
           (term
             (variable)))
-              (ERROR
-              (string)
-              (nname)
-              (string)
-              (string))
-            (predicate
-              (nname)
-              (term
-                (boolean
-                  (MISSING "true"))))))))
+        (expression
+          (binary_op_expression
+            (expression
+              (binary_op_expression
+                (expression
+                  (unary_op_expression
+                    (expression
+                      (methods
+                        (expression
+                          (term
+                            (string)))
+                        (nname)
+                        (method_argument
+                          (expression
+                            (term
+                              (string))))))))
+                (expression
+                  (term
+                    (number)))))
+            (expression
+              (methods
+                (expression
+                  (term
+                    (string)))
+                (nname)))))))))

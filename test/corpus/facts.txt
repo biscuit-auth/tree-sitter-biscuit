@@ -11,6 +11,8 @@ fact(
   2023-02-28T00:00:00Z
 );
 fact(null);
+fact("string");
+fact({"string"});
 fact($variable);
 
 ---
@@ -56,6 +58,18 @@ fact($variable);
       (nname)
       (fact_term
         (null))))
+  (authorizer_element
+    (fact
+      (nname)
+      (fact_term
+        (string))))
+  (authorizer_element
+    (fact
+      (nname)
+      (fact_term
+        (set
+          (set_term
+            (string))))))
   (ERROR
     (predicate
       (nname)
