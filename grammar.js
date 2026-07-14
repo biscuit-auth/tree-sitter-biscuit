@@ -109,15 +109,15 @@ module.exports = grammar({
       prec.left(1, seq($.expression, "&&", $.expression)),
       prec.left(0, seq($.expression, "||", $.expression))
     ),
-  term: $ => choice($.param, $.boolean, $.null, $.bytes, $.number, $.date, $.set, $.array, $.map, $.variable),
-  fact_term: $ => choice($.param, $.boolean, $.null, $.bytes, $.number, $.date, $.set, $.array, $.map),
+  term: $ => choice($.param, $.boolean, $.null, $.bytes, $.number, $.date, $.string, $.set, $.array, $.map, $.variable),
+  fact_term: $ => choice($.param, $.boolean, $.null, $.bytes, $.number, $.date, $.string, $.set, $.array, $.map),
   set_term: $ => choice($.param, $.boolean, $.null, $.bytes, $.number, $.date, $.string),
   boolean: $ => choice("true", "false"),
   null: $ => "null",
   bytes: $ => token(seq("hex:", optional(repeat1(/[0-9a-f]{2}/)))),
   number: $ => token(seq(optional("-"), repeat1(/[0-9]/))),
   date: $ => token(
-    /[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-2]{2}(Z|(\+|-)[0-9]{2}:[0-9]{2})/
+    /[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-5][0-9](Z|(\+|-)[0-9]{2}:[0-9]{2})/
   ),
   string: $ => token(seq(
     "\"",

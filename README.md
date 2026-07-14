@@ -6,9 +6,16 @@ This is a work in progress, but it is already used by the [biscuit online toolin
 
 Tree-sitter biscuit supports [biscuit datalog v3.3](https://www.biscuitsec.org/blog/biscuit-3-3/).
 
+The following helix features are supported:
+
+- syntax highlighting
+- separator matching (aka rainbow brackets)
+- tags listing
+- text objects
+
 ## Known issues
 
-Method calls are not parsed correctly (see [issue #3](https://github.com/eclipse-biscuit/tree-sitter-biscuit/issues/3)).
+Comparison / equality binary operators that are *not* associative are still parsed as left-associative to avoid an ambiguity in the grammar.
 
 ## How to use
 
@@ -35,7 +42,7 @@ language-servers = []
 
 [[grammar]]
 name = "biscuit"
-source = { git = "https://github.com/biscuit-auth/tree-sitter-biscuit", rev = "91923e75bc93142500349684baec30b9539bdc0b" }
+source = { git = "https://github.com/biscuit-auth/tree-sitter-biscuit", rev = "1b49f74064438e324485c272568b01ebfbe56b21" }
 ```
 
-Then, copy `queries/highlights.scm` and `queries/textobjects.scm` in `queries/biscuit/` within a helix runtime directory.
+Then, copy `editors/helix/*.scm` in `queries/biscuit/` within a helix runtime directory.

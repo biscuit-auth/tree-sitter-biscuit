@@ -222,6 +222,10 @@
         {
           "type": "set",
           "named": true
+        },
+        {
+          "type": "string",
+          "named": true
         }
       ]
     }
@@ -536,7 +540,6 @@
   {
     "type": "source_file",
     "named": true,
-    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -599,6 +602,10 @@
         },
         {
           "type": "set",
+          "named": true
+        },
+        {
+          "type": "string",
           "named": true
         },
         {
