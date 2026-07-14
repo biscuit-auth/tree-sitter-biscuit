@@ -45,4 +45,4 @@ name = "biscuit"
 source = { git = "https://github.com/biscuit-auth/tree-sitter-biscuit", rev = "1b49f74064438e324485c272568b01ebfbe56b21" }
 ```
 
-Then, copy `queries/*.scm` in `queries/biscuit/` within a helix runtime directory.
+Then, copy `editors/helix/*.scm` in `queries/biscuit/` within a helix runtime directory.
